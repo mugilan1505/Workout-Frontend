@@ -527,7 +527,7 @@ const Workouts = () => {
                   <CardMedia
                     component="img"
                     height="200"
-                    image={workout.imageUrl ? (workout.imageUrl.startsWith('http') ? workout.imageUrl : `http://localhost:8080${workout.imageUrl}`) : "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop"}
+                    image={workout.imageUrl ? (workout.imageUrl.startsWith('http') ? workout.imageUrl : `https://workout-backend-oux2.onrender.com${workout.imageUrl}`) : "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop"}
                     alt={workout.name}
                     sx={{ objectFit: 'cover' }}
                   />

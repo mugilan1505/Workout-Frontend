@@ -255,7 +255,7 @@ const WorkoutDetails = () => {
                  {workout.imageUrl && (
                    <Box sx={{ p: 2, textAlign: 'center' }}>
                      <img 
-                       src={workout.imageUrl.startsWith('http') ? workout.imageUrl : `http://localhost:8080${workout.imageUrl}`}
+                       src={workout.imageUrl.startsWith('http') ? workout.imageUrl : `https://workout-backend-oux2.onrender.com${workout.imageUrl}`}
                        alt={workout.name}
                        style={{ 
                          width: '100%', 
@@ -274,7 +274,7 @@ const WorkoutDetails = () => {
                    loop
                    style={{ borderRadius: '12px 12px 0 0' }}
                  >
-                   <source src={workout.videoUrl ? (workout.videoUrl.startsWith('http') ? workout.videoUrl : `http://localhost:8080${workout.videoUrl}`) : 'https://www.w3schools.com/html/mov_bbb.mp4'} type="video/mp4" />
+                   <source src={workout.videoUrl ? (workout.videoUrl.startsWith('http') ? workout.videoUrl : `https://workout-backend-oux2.onrender.com${workout.videoUrl}`) : 'https://www.w3schools.com/html/mov_bbb.mp4'} type="video/mp4" />
                    Your browser does not support the video tag.
                  </video>
                 
