@@ -1,0 +1,206 @@
+/* Register Page Styles */
+
+.register-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe8d6 100%);
+  padding: 2rem 0;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.register-content {
+  padding: 2rem 0;
+}
+
+.register-left-section {
+  padding-right: 2rem;
+}
+
+.register-title {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.register-subtitle {
+  color: #5a6c7d;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.register-description {
+  color: #5a6c7d;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.register-benefits {
+  margin-bottom: 2rem;
+}
+
+.register-benefit-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.register-benefit-icon {
+  margin-right: 1rem;
+  color: #27ae60;
+}
+
+.register-benefit-text {
+  color: #5a6c7d;
+  font-size: 1rem;
+}
+
+.register-card {
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.register-card-content {
+  padding: 2rem;
+}
+
+.register-card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.register-card-icon {
+  font-size: 64px;
+  color: #ff6b35;
+  margin-bottom: 1rem;
+}
+
+.register-card-title {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.register-card-subtitle {
+  color: #5a6c7d;
+  font-size: 0.9rem;
+}
+
+.register-form {
+  margin-top: 1rem;
+}
+
+.register-input {
+  margin-bottom: 1.5rem;
+}
+
+.register-input .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.register-input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #ff6b35;
+}
+
+.register-input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #ff6b35;
+}
+
+.register-select {
+  margin-bottom: 1.5rem;
+}
+
+.register-select .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.register-select .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #ff6b35;
+}
+
+.register-select .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #ff6b35;
+}
+
+.register-button {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.register-button:hover {
+  background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.register-button:disabled {
+  background: #ccc;
+  transform: none;
+  box-shadow: none;
+}
+
+.register-divider {
+  margin: 1.5rem 0;
+}
+
+.register-divider-text {
+  color: #5a6c7d;
+  font-size: 0.9rem;
+}
+
+.register-footer {
+  text-align: center;
+}
+
+.register-footer-text {
+  color: #5a6c7d;
+  margin-bottom: 1rem;
+}
+
+.register-login-button {
+  border-color: #ff6b35;
+  color: #ff6b35;
+  text-transform: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  transition: all 0.3s ease;
+}
+
+.register-login-button:hover {
+  border-color: #f7931e;
+  background-color: rgba(255, 107, 53, 0.1);
+}
+
+.register-password-toggle {
+  color: #5a6c7d;
+}
+
+.register-error-alert {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .register-left-section {
+    padding-right: 0;
+    margin-bottom: 2rem;
+  }
+  
+  .register-card {
+    max-width: 100%;
+  }
+  
+  .register-card-content {
+    padding: 1.5rem;
+  }
+}

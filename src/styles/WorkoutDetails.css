@@ -1,0 +1,235 @@
+.workout-details-container {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 2rem 0;
+}
+
+.workout-details-content {
+  padding: 0 1rem;
+}
+
+.workout-details-header {
+  text-align: center;
+  color: #2d3748;
+  margin-bottom: 2rem;
+}
+
+.workout-details-title {
+  color: #2d3748 !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.workout-details-subtitle {
+  color: #4a5568 !important;
+  font-size: 1.1rem !important;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.workout-video-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.workout-video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.workout-details-info-card {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background: white;
+  height: fit-content;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.workout-details-info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.workout-details-error-alert {
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+/* Timer styles */
+.timer-display {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #4a90e2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress bar styles */
+.progress-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #4a90e2, #3b82f6);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Button styles */
+.workout-control-button {
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  transition: all 0.2s ease !important;
+  background-color: #4a90e2 !important;
+  color: white !important;
+}
+
+.workout-control-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #3b82f6 !important;
+}
+
+/* Chip styles */
+.difficulty-chip {
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+}
+
+.body-part-chip {
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .workout-details-container {
+    padding: 1rem 0;
+  }
+  
+  .workout-details-content {
+    padding: 0 0.5rem;
+  }
+  
+  .workout-details-title {
+    font-size: 2rem !important;
+  }
+  
+  .timer-display {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .workout-details-title {
+    font-size: 1.75rem !important;
+  }
+  
+  .workout-details-subtitle {
+    font-size: 1rem !important;
+  }
+  
+  .timer-display {
+    font-size: 1.75rem;
+  }
+  
+  .workout-control-button {
+    padding: 10px 20px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .workout-details-container {
+    padding: 0.5rem 0;
+  }
+  
+  .workout-details-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .timer-display {
+    font-size: 1.5rem;
+  }
+  
+  .workout-control-button {
+    padding: 8px 16px !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+/* Animation for completion dialog */
+@keyframes celebration {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.celebration-dialog {
+  animation: celebration 0.5s ease-out;
+}
+
+/* Video player custom styles */
+video {
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Stats section styles */
+.stats-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.stats-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.stats-item:hover {
+  transform: translateX(4px);
+}
+
+.stats-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Description and instructions styles */
+.description-section,
+.instructions-section {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-left: 4px solid #ff6b35;
+}
+
+.instructions-section {
+  border-left-color: #27ae60;
+}
+
+/* Loading animation */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+} 

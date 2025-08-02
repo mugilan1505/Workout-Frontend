@@ -1,0 +1,541 @@
+import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Button,
+  CircularProgress,
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Chip,
+  Container
+} from '@mui/material';
+import { 
+  Add as AddIcon,
+  TrendingUp as TrendingUpIcon,
+  CheckCircle as CheckCircleIcon,
+  Schedule as ScheduleIcon,
+  FitnessCenter as FitnessIcon
+} from '@mui/icons-material';
+import { useSelector, useDispatch } from 'react-redux';
+import { 
+  fetchUserProgress, 
+  fetchAllProgress,
+  createProgress,
+  clearError 
+} from '../redux/slices/progressSlice';
+import { fetchWorkouts } from '../redux/slices/workoutSlice';
+import { fetchUsers } from '../redux/slices/userSlice';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
+
+const Progress = () => {
+  const dispatch = useDispatch();
+  const { userProgress, allProgress, loading, error } = useSelector((state) => state.progress);
+  const { workouts } = useSelector((state) => state.workouts);
+  const { users } = useSelector((state) => state.users);
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user?.roles?.includes('ROLE_ADMIN');
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [formData, setFormData] = useState({
+    workoutId: '',
+    completed: true,
+    date: new Date().toISOString().split('T')[0],
+    durationMinutes: 30, // Default 30 minutes
+    caloriesBurned: 200, // Default calories
+    notes: ''
+  });
+
+  useEffect(() => {
+    if (isAdmin) {
+      dispatch(fetchAllProgress());
+      dispatch(fetchUsers());
+    } else if (user?.id) {
+      dispatch(fetchUserProgress(user.id));
+    }
+    dispatch(fetchWorkouts());
+  }, [dispatch, user?.id, isAdmin]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => dispatch(clearError()), 5000);
+    }
+  }, [error, dispatch]);
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setFormData({
+      workoutId: '',
+      completed: true,
+      date: new Date().toISOString().split('T')[0],
+      durationMinutes: 30,
+      caloriesBurned: 200,
+      notes: ''
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (formData.workoutId) {
+      await dispatch(createProgress({
+        ...formData,
+        userId: user.id
+      }));
+      handleCloseDialog();
+    }
+  };
+
+  // Prepare chart data
+  const chartData = userProgress.map(progress => ({
+    date: new Date(progress.date).toLocaleDateString(),
+    completed: progress.completed ? 1 : 0,
+    workout: progress.workout?.name || 'Unknown'
+  }));
+
+  const weeklyStats = userProgress.reduce((stats, progress) => {
+    const week = new Date(progress.date).toLocaleDateString('en-US', { week: 'numeric', year: 'numeric' });
+    if (!stats[week]) {
+      stats[week] = { completed: 0, total: 0 };
+    }
+    stats[week].total++;
+    if (progress.completed) {
+      stats[week].completed++;
+    }
+    return stats;
+  }, {});
+
+  const weeklyChartData = Object.entries(weeklyStats).map(([week, data]) => ({
+    week,
+    completed: data.completed,
+    total: data.total
+  }));
+
+  // For admin, calculate stats across all users
+  const progressData = isAdmin ? allProgress : userProgress;
+  
+  // Group progress by user for admin view with enhanced user details
+  const userProgressMap = isAdmin ? allProgress.reduce((acc, progress) => {
+    const userId = progress.userId;
+    if (!acc[userId]) {
+      // Find user details from users array if available
+      const userDetails = users?.find(u => u.id === userId) || {};
+      acc[userId] = {
+        user: {
+          id: userId,
+          username: userDetails.username || `User ${userId}`,
+          email: userDetails.email || 'No email',
+          fullName: userDetails.fullName || 'No name',
+          joinDate: userDetails.createdAt || 'Unknown',
+          lastLogin: userDetails.lastLogin || 'Never'
+        },
+        total: 0,
+        completed: 0,
+        lastWorkout: null,
+        favoriteWorkout: null,
+        workouts: []
+      };
+    }
+    
+    acc[userId].total++;
+    if (progress.completed) {
+      acc[userId].completed++;
+      acc[userId].workouts.push(progress);
+      
+      // Track last workout date
+      if (!acc[userId].lastWorkout || new Date(progress.date) > new Date(acc[userId].lastWorkout.date)) {
+        acc[userId].lastWorkout = progress;
+      }
+    }
+    
+    // Calculate favorite workout (most completed)
+    const workoutCounts = acc[userId].workouts.reduce((counts, w) => {
+      const name = w.workout?.name || 'Unknown';
+      counts[name] = (counts[name] || 0) + 1;
+      return counts;
+    }, {});
+    
+    const favorite = Object.entries(workoutCounts).sort((a, b) => b[1] - a[1])[0];
+    if (favorite) {
+      acc[userId].favoriteWorkout = {
+        name: favorite[0],
+        count: favorite[1]
+      };
+    }
+    
+    return acc;
+  }, {}) : null;
+
+  const totalWorkouts = isAdmin ? allProgress.length : userProgress.length;
+  const completedWorkouts = isAdmin 
+    ? allProgress.filter(p => p.completed).length 
+    : userProgress.filter(p => p.completed).length;
+  const completionRate = totalWorkouts > 0 ? Math.round((completedWorkouts / totalWorkouts) * 100) : 0;
+
+  if (loading) {
+    return (
+      <Box className="modern-home-container">
+        <Container maxWidth="lg" sx={{ py: 8 }}>
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+            <CircularProgress sx={{ color: '#ff6b35' }} />
+          </Box>
+        </Container>
+      </Box>
+    );
+  }
+
+  return (
+    <Box className="modern-home-container">
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        {/* Header */}
+        <Box sx={{ mb: 4 }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+            <Typography variant="h3" className="modern-title">
+              Progress Dashboard
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={handleOpenDialog}
+              className="modern-button"
+            >
+              Mark Workout Complete
+            </Button>
+          </Box>
+          <Typography variant="body1" className="modern-text">
+            Track your fitness journey and monitor your achievements
+          </Typography>
+        </Box>
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        {/* Stats Cards */}
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid item xs={12} sm={4}>
+            <Card className="modern-card hover-lift">
+              <CardContent sx={{ textAlign: 'center', p: 3 }}>
+                <FitnessIcon sx={{ fontSize: 48, color: '#ff6b35', mb: 2 }} />
+                <Typography variant="h4" className="modern-title">
+                  {totalWorkouts}
+                </Typography>
+                <Typography variant="body2" className="modern-text">
+                  Total Workouts
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Card className="modern-card hover-lift">
+              <CardContent sx={{ textAlign: 'center', p: 3 }}>
+                <CheckCircleIcon sx={{ fontSize: 48, color: '#27ae60', mb: 2 }} />
+                <Typography variant="h4" className="modern-title">
+                  {completedWorkouts}
+                </Typography>
+                <Typography variant="body2" className="modern-text">
+                  Completed
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Card className="modern-card hover-lift">
+              <CardContent sx={{ textAlign: 'center', p: 3 }}>
+                <TrendingUpIcon sx={{ fontSize: 48, color: '#f7931e', mb: 2 }} />
+                <Typography variant="h4" className="modern-title">
+                  {completionRate}%
+                </Typography>
+                <Typography variant="body2" className="modern-text">
+                  Success Rate
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+
+        {/* Charts */}
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid item xs={12} lg={6}>
+            <Card className="modern-card">
+              <CardContent sx={{ p: 3 }}>
+                <Typography variant="h6" className="modern-title" gutterBottom>
+                  Daily Progress
+                </Typography>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="completed" stroke="#ff6b35" strokeWidth={3} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Card className="modern-card">
+              <CardContent sx={{ p: 3 }}>
+                <Typography variant="h6" className="modern-title" gutterBottom>
+                  Weekly Completion Rate
+                </Typography>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={weeklyChartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="week" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="completed" fill="#27ae60" />
+                    <Bar dataKey="total" fill="#ff6b35" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+
+        {isAdmin ? (
+          <Card className="modern-card">
+            <CardContent sx={{ p: 4 }}>
+              <Typography variant="h5" className="modern-title" gutterBottom>
+                User Workout Completions
+              </Typography>
+              <Box sx={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid #e0e0e0' }}>
+                      <th style={{ textAlign: 'left', padding: '12px', fontWeight: 'bold' }}>User Details</th>
+                      <th style={{ textAlign: 'center', padding: '12px', fontWeight: 'bold' }}>Workout Stats</th>
+                      <th style={{ textAlign: 'center', padding: '12px', fontWeight: 'bold' }}>Activity</th>
+                      <th style={{ textAlign: 'right', padding: '12px', fontWeight: 'bold' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.values(userProgressMap || {}).map((userData) => (
+                      <tr key={userData.user.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                        <td style={{ padding: '12px' }}>
+                          <Typography variant="subtitle1" fontWeight="medium">
+                            {userData.user.fullName}
+                            <Typography variant="body2" color="textSecondary">
+                              @{userData.user.username}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                              {userData.user.email}
+                            </Typography>
+                            <Chip 
+                              label={`Member since: ${new Date(userData.user.joinDate).toLocaleDateString()}`} 
+                              size="small" 
+                              variant="outlined"
+                              sx={{ mt: 1 }}
+                            />
+                          </Typography>
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          <Box display="flex" flexDirection="column" gap={1}>
+                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">Total Workouts:</Typography>
+                              <Chip 
+                                label={userData.total} 
+                                size="small" 
+                                variant="outlined"
+                              />
+                            </Box>
+                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">Completed:</Typography>
+                              <Chip 
+                                label={`${userData.completed} (${userData.total > 0 ? Math.round((userData.completed / userData.total) * 100) : 0}%)`}
+                                color="primary"
+                                size="small"
+                              />
+                            </Box>
+                            {userData.favoriteWorkout && (
+                              <Box display="flex" justifyContent="space-between" alignItems="center">
+                                <Typography variant="body2">Favorite:</Typography>
+                                <Chip 
+                                  label={`${userData.favoriteWorkout.name} (${userData.favoriteWorkout.count}x)`}
+                                  color="secondary"
+                                  size="small"
+                                />
+                              </Box>
+                            )}
+                          </Box>
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          <Box display="flex" flexDirection="column" gap={1}>
+                            <Typography variant="body2">
+                              <strong>Last Active:</strong> {userData.user.lastLogin ? new Date(userData.user.lastLogin).toLocaleString() : 'Never'}
+                            </Typography>
+                            {userData.lastWorkout ? (
+                              <Typography variant="body2">
+                                <strong>Last Workout:</strong> {new Date(userData.lastWorkout.date).toLocaleDateString()}
+                                {userData.lastWorkout.workout && ` (${userData.lastWorkout.workout.name})`}
+                              </Typography>
+                            ) : (
+                              <Typography variant="body2" color="textSecondary">
+                                No workouts completed yet
+                              </Typography>
+                            )}
+                          </Box>
+                        </td>
+                        <td style={{ textAlign: 'right', padding: '12px' }}>
+                          <Button 
+                            size="small" 
+                            variant="outlined"
+                            onClick={() => {
+                              // Show workout details for this user
+                              alert(`Showing details for user ${userData.user.id} - ${userData.completed} workouts`);
+                            }}
+                          >
+                            View Details
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                    {Object.keys(userProgressMap || {}).length === 0 && (
+                      <tr>
+                        <td colSpan="3" style={{ textAlign: 'center', padding: '24px' }}>
+                          <ScheduleIcon sx={{ fontSize: 48, color: '#ff6b35', mb: 2, opacity: 0.5 }} />
+                          <Typography variant="h6" className="modern-title" gutterBottom>
+                            No Workout Completions Yet
+                          </Typography>
+                          <Typography variant="body1" className="modern-text">
+                            Users will appear here once they complete workouts.
+                          </Typography>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </Box>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="modern-card">
+            <CardContent sx={{ p: 4 }}>
+              <Typography variant="h5" className="modern-title" gutterBottom>
+                Recent Progress
+              </Typography>
+              <Grid container spacing={2}>
+                {userProgress.slice(0, 6).map((progress) => (
+                  <Grid item xs={12} sm={6} md={4} key={progress.id}>
+                    <Card className="modern-card hover-lift" variant="outlined">
+                      <CardContent>
+                        <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                          <Typography variant="subtitle1" fontWeight="bold" className="modern-title">
+                            {progress.workout?.name || 'Unknown Workout'}
+                          </Typography>
+                          <Chip
+                            label={progress.completed ? 'Completed' : 'Incomplete'}
+                            sx={{
+                              backgroundColor: progress.completed ? '#27ae60' : '#f7931e',
+                              color: 'white'
+                            }}
+                            size="small"
+                          />
+                        </Box>
+                        <Box mb={1}>
+                          <Typography variant="body2" className="modern-text">
+                            <strong>Date:</strong> {new Date(progress.date).toLocaleDateString()}
+                          </Typography>
+                          {progress.durationMinutes && (
+                            <Typography variant="body2" className="modern-text">
+                              <strong>Duration:</strong> {progress.durationMinutes} minutes
+                            </Typography>
+                          )}
+                          {progress.caloriesBurned && (
+                            <Typography variant="body2" className="modern-text">
+                              <strong>Calories:</strong> {progress.caloriesBurned} kcal
+                            </Typography>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                type="date"
+                label="Date"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                required
+              />
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Duration (minutes)"
+                value={formData.durationMinutes}
+                onChange={(e) => setFormData({ ...formData, durationMinutes: parseInt(e.target.value) || 0 })}
+                inputProps={{ min: 1, max: 1000 }}
+                required
+              />
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Calories Burned"
+                value={formData.caloriesBurned}
+                onChange={(e) => setFormData({ ...formData, caloriesBurned: parseInt(e.target.value) || 0 })}
+                inputProps={{ min: 1, max: 10000 }}
+                required
+              />
+            </Grid>
+            
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                rows={3}
+                label="Notes"
+                placeholder="How did it go? Any notes about your workout?"
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions sx={{ p: 2 }}>
+          <Button onClick={handleCloseDialog} color="error" variant="outlined">
+            Cancel
+          </Button>
+          <Button 
+            onClick={handleSubmit} 
+            variant="contained" 
+            color="primary"
+            disabled={!formData.workoutId || !formData.date}
+            startIcon={<CheckCircleIcon />}
+          >
+            Save Workout
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+};
+
+export default Progress;

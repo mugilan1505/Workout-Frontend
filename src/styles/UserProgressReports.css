@@ -1,0 +1,307 @@
+/* User Progress Reports Page Styles */
+.user-progress-reports-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe8d6 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.user-progress-reports-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.user-progress-reports-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.user-progress-reports-title {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.user-progress-reports-subtitle {
+  color: #5a6c7d;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Statistics Cards */
+.user-progress-reports-stat-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 107, 53, 0.1);
+}
+
+.user-progress-reports-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.user-progress-reports-stat-value {
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.user-progress-reports-stat-label {
+  color: #5a6c7d;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Table Section */
+.user-progress-reports-table-section {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 107, 53, 0.1);
+  overflow: hidden;
+}
+
+.user-progress-reports-table-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.user-progress-reports-table {
+  width: 100%;
+}
+
+.user-progress-reports-table-header {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+}
+
+.user-progress-reports-table-header-cell {
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: none !important;
+}
+
+.user-progress-reports-table-row {
+  transition: background-color 0.2s ease;
+}
+
+.user-progress-reports-table-row:hover {
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+.user-progress-reports-table-row td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem 0.75rem;
+}
+
+/* Filter Button */
+.user-progress-reports-filter-button {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 1rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  transition: all 0.3s ease !important;
+}
+
+.user-progress-reports-filter-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
+}
+
+/* Modal Styles */
+.user-progress-reports-modal {
+  border-radius: 16px;
+}
+
+.user-progress-reports-modal .MuiDialog-paper {
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+}
+
+.user-progress-reports-modal-title {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 16px 16px 0 0;
+}
+
+.user-progress-reports-modal-content {
+  padding: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.user-progress-reports-modal-actions {
+  padding: 1rem 2rem 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.user-progress-reports-modal-close-button {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 2rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  transition: all 0.3s ease !important;
+}
+
+.user-progress-reports-modal-close-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
+}
+
+/* Search and Filter Styles */
+.user-progress-reports-container .MuiTextField-root {
+  background: white;
+  border-radius: 8px;
+}
+
+.user-progress-reports-container .MuiTextField-root .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.user-progress-reports-container .MuiFormControl-root {
+  background: white;
+  border-radius: 8px;
+}
+
+.user-progress-reports-container .MuiFormControl-root .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+/* Pagination Styles */
+.user-progress-reports-container .MuiPagination-root .MuiPaginationItem-root {
+  border-radius: 8px;
+  margin: 0 2px;
+  font-weight: 600;
+}
+
+.user-progress-reports-container .MuiPagination-root .Mui-selected {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+}
+
+/* Chip Styles */
+.user-progress-reports-container .MuiChip-root {
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-progress-reports-content {
+    padding: 1rem;
+  }
+  
+  .user-progress-reports-title {
+    font-size: 2rem;
+  }
+  
+  .user-progress-reports-subtitle {
+    font-size: 1rem;
+  }
+  
+  .user-progress-reports-stat-value {
+    font-size: 2rem;
+  }
+  
+  .user-progress-reports-modal-content {
+    padding: 1rem;
+  }
+  
+  .user-progress-reports-modal-title {
+    padding: 1rem 1.5rem;
+  }
+  
+  .user-progress-reports-modal-actions {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-progress-reports-content {
+    padding: 0.5rem;
+  }
+  
+  .user-progress-reports-title {
+    font-size: 1.75rem;
+  }
+  
+  .user-progress-reports-stat-value {
+    font-size: 1.75rem;
+  }
+  
+  .user-progress-reports-table-header-cell {
+    font-size: 0.8rem !important;
+    padding: 0.5rem 0.25rem !important;
+  }
+  
+  .user-progress-reports-table-row td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Loading State */
+.user-progress-reports-container .MuiCircularProgress-root {
+  color: #ff6b35;
+}
+
+/* Alert Styles */
+.user-progress-reports-container .MuiAlert-root {
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* Empty State */
+.user-progress-reports-container .empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.user-progress-reports-container .empty-state .MuiSvgIcon-root {
+  font-size: 4rem;
+  color: #ff6b35;
+  margin-bottom: 1rem;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-progress-reports-stat-card,
+.user-progress-reports-table-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.user-progress-reports-stat-card:nth-child(1) { animation-delay: 0.1s; }
+.user-progress-reports-stat-card:nth-child(2) { animation-delay: 0.2s; }
+.user-progress-reports-stat-card:nth-child(3) { animation-delay: 0.3s; }
+.user-progress-reports-stat-card:nth-child(4) { animation-delay: 0.4s; }
+.user-progress-reports-table-section { animation-delay: 0.5s; } 

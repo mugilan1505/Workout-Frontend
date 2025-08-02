@@ -1,0 +1,364 @@
+/* Diets Page Styles */
+
+.diets-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 0;
+}
+
+.diets-content {
+  padding: 2rem 0;
+}
+
+.diets-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.diets-title {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.diets-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+}
+
+.diets-filters {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.diets-filter-chip {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.diets-filter-chip:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.diets-filter-chip.selected {
+  background: #ff6b35;
+  color: white;
+  border-color: #ff6b35;
+}
+
+.diets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.diet-card {
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: white;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.diet-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+.diet-card-content {
+  padding: 1.5rem;
+}
+
+.diet-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.diet-title {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.diet-type {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.diet-type.vegetarian {
+  background: #d4edda;
+  color: #155724;
+}
+
+.diet-type.vegan {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.diet-type.keto {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.diet-type.paleo {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.diet-type.mediterranean {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.diet-description {
+  color: #5a6c7d;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.diet-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.diet-detail-item {
+  text-align: center;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.diet-detail-label {
+  color: #5a6c7d;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.diet-detail-value {
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.diet-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.diet-view-button {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.diet-view-button:hover {
+  background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.diet-edit-button {
+  border-color: #ff6b35;
+  color: #ff6b35;
+  text-transform: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.diet-edit-button:hover {
+  border-color: #f7931e;
+  background-color: rgba(255, 107, 53, 0.1);
+}
+
+.diet-delete-button {
+  border-color: #e74c3c;
+  color: #e74c3c;
+  text-transform: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.diet-delete-button:hover {
+  border-color: #c0392b;
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.diets-add-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.diets-add-button {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  color: white;
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+}
+
+.diets-add-button:hover {
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.diets-empty {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.diets-loading {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.diet-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+}
+
+.diet-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.diet-modal-title {
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.diet-modal-close {
+  color: #5a6c7d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.diet-modal-close:hover {
+  color: #e74c3c;
+}
+
+.diet-modal-content {
+  margin-bottom: 1.5rem;
+}
+
+.diet-modal-description {
+  color: #5a6c7d;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.diet-modal-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.diet-modal-detail {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.diet-modal-detail-label {
+  color: #5a6c7d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.diet-modal-detail-value {
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.diet-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.diet-modal-button {
+  text-transform: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.diet-modal-close-button {
+  border-color: #5a6c7d;
+  color: #5a6c7d;
+}
+
+.diet-modal-close-button:hover {
+  border-color: #2c3e50;
+  background-color: rgba(92, 108, 125, 0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .diets-filters {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .diets-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .diet-card-content {
+    padding: 1rem;
+  }
+  
+  .diet-actions {
+    flex-direction: column;
+  }
+  
+  .diet-modal {
+    width: 95%;
+    padding: 1.5rem;
+  }
+  
+  .diet-modal-actions {
+    flex-direction: column;
+  }
+} 
